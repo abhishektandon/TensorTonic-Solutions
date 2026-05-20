@@ -20,8 +20,7 @@ def ddpm_sample(x_T, betas, epsilon_preds, z_values):
             z = z_values[T-t-1]
         else:
             z = np.zeros_like(x_t)
-        
-        # x_t_minus_1 = (x_t - ((1 - alphas[t])/(np.sqrt(1 - alpha_bars[t]))) * epsilon_preds[t]) / (np.sqrt(alphas[t])) + np.sqrt(betas[t]) * z
+
         one_by_sq_alpha_t = 1/np.sqrt(alphas[t])
         one_minus_alpha_t = 1 - alphas[t]
         sq_one_minus_alpha_t_bar = np.sqrt(1 - alpha_bars[t])
