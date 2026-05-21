@@ -44,12 +44,7 @@ class SimpleTokenizer:
         keys = self.word_to_id.keys()
         arr = text.lower().split()
         
-        ids = [
-            self.word_to_id[i]
-            if i in keys
-            else self.word_to_id[self.unk_token]
-            for i in arr
-        ]
+        ids = [self.word_to_id[i] if i in keys else self.word_to_id[self.unk_token] for i in arr]
         
         return ids
     
@@ -57,13 +52,8 @@ class SimpleTokenizer:
         """
         Convert list of token IDs back to text.
         """
-        keys = self.id_to_word.keys()
         
-        words = [
-            self.id_to_word[i]
-            if i in keys
-            else self.unk_token
-            for i in ids
-        ]
+        keys = self.id_to_word.keys()
+        words = [self.id_to_word[i] if i in keys else self.unk_token for i in ids]
         
         return ' '.join(words)
