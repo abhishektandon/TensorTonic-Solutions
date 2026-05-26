@@ -8,9 +8,10 @@ def positional_encoding(seq_length: int, d_model: int) -> np.ndarray:
     pos = np.arange(seq_length)
     
     for i in range(d_model):
+        denom = 1e4**(2*(i//2)/d_model)
         if i%2 == 0:
-            pos_emb[:, i] = np.sin(pos / (1e4**(2*(i//2)/d_model)))
+            pos_emb[:, i] = np.sin(pos / denom)
         else:
-            pos_emb[:, i] = np.cos(pos / (1e4**(2*(i//2)/d_model)))
+            pos_emb[:, i] = np.cos(pos / denom)
 
     return pos_emb
