@@ -51,13 +51,8 @@ def multi_head_attention(Q: np.ndarray, K: np.ndarray, V: np.ndarray,
     Vi = np.transpose(Vm.reshape(-1, n, num_heads, d_k), (0, 2, 1, 3))
 
     heads = []
-
     for i in range(num_heads):
-        atten = (
-            Qi[:, i, :, :]
-            @ np.transpose(Ki[:, i, :, :], (0, 2, 1))
-        ) / math.sqrt(d_k)
-
+        atten = (Qi[:, i, :, :] @ np.transpose(Ki[:, i, :, :], (0, 2, 1))) / math.sqrt(d_k)
         head_i = softmax(atten, axis=-1) @ Vi[:, i, :, :]
         heads.append(head_i)
 
@@ -91,20 +86,7 @@ def encoder_block(x: np.ndarray, W_q: np.ndarray, W_k: np.ndarray,
     Complete encoder block: MHA + FFN with residuals and layer norms.
     """
 
-    x_hat = layer_norm(
-        x + multi_head_attention(
-            x, x, x,
-            W_q, W_k, W_v, W_o,
-            num_heads
-        ),
-        gamma1,
-        beta1
-    )
-
-    output = layer_norm(
-        x_hat + feed_forward(x_hat, W1, b1, W2, b2),
-        gamma2,
-        beta2
-    )
+    x_hat = layer_norm(x + multi_head_attention(x, x, x, W_q, W_k, W_v, W_o, num_heads), gamma1, beta1)
+    output = layer_norm(x_hat + feed_forward(x_hat, W1, b1, W2, b2), gamma2, beta2)
 
     return output
