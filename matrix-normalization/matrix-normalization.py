@@ -12,7 +12,7 @@ def matrix_normalization(matrix, axis=None, norm_type='l2'):
     if norm_type not in ["l1", "l2", "max"]:
         return None
 
-    if axis not in [0, 1, -1, None]:
+    if axis not in [0, 1, None]:
         return None
     
     if norm_type == "l2":
