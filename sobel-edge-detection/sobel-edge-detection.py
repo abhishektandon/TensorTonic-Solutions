@@ -5,15 +5,18 @@ def sobel_edges(image):
     """
     Apply the Sobel operator to detect edges.
     """
+    
     pad_width = 1
+    image = np.array(image)
+    m, n = image.shape
+    
     image = np.pad(image, pad_width=pad_width, mode='constant')
     k1 = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
     k2 = np.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]])
-    m, n = image.shape
     ksize, _ = k1.shape
 
-    m_out = m - ksize + 1
-    n_out = n - ksize + 1
+    m_out = math.floor(m + 2*pad_width - ksize) + 1
+    n_out = math.floor(n + 2*pad_width - ksize) + 1
     
     gx = np.zeros((m_out, n_out))
     gy = np.zeros((m_out, n_out))
