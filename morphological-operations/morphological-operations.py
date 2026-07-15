@@ -23,14 +23,10 @@ def morphological_op(image, kernel, operation):
             roi = image[i: i+ksize, j: j+ksize]
             
             if operation == 'erode':
-                res = roi & kernel
                 if np.all(roi[kernel == 1] == 1):
                     output[i, j] = 1
             elif operation == 'dilate':
-                res = roi | kernel
                 if np.any(roi[kernel == 1] == 1):
                     output[i, j] = 1
 
-
     return output.tolist()
-    
